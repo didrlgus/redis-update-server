@@ -8,14 +8,9 @@ group = 'com.redis.update.server'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -24,7 +19,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compile("org.mariadb.jdbc:mariadb-java-client")
     compile('mysql:mysql-connector-java')
-    compileOnly 'org.projectlombok:lombok'
+    compile('com.h2database:h2')
+    compile('org.projectlombok:lombok')
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
