@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,4 +42,16 @@ public class CategoryApiController {
         return ResponseEntity.ok().body(categoryService.addSecondCategory(secondCategory));
     }
 
+    // 1차,2차 카테고리 수정 (관리자 권한)
+    @PutMapping("/v1/categories/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody @Valid CategoryRequestDto categoryDto,
+                                            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok().body(categoryService.updateCategory(id, categoryDto));
+    }
 }

@@ -3,14 +3,13 @@ package com.shoppingmall.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Setter
 @Getter
-@ToString
+@Builder
 public class CategoryRequestDto {
 
     @NotBlank(message = "카테고리명을 적어주세요.")
@@ -21,7 +20,6 @@ public class CategoryRequestDto {
     @Setter
     @Getter
     @Builder
-    @ToString
     public static class firstCategory {
         @NotBlank(message = "카테고리명을 적어주세요.")
         @Size(max = 50, message = "카테고리명을 알맞게 적어주세요.")
@@ -32,7 +30,6 @@ public class CategoryRequestDto {
     @Setter
     @Getter
     @Builder
-    @ToString
     public static class secondCategory {
         @NotBlank(message = "카테고리명을 적어주세요.")
         @Size(max = 50, message = "카테고리명을 알맞게 적어주세요.")

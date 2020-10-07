@@ -2,8 +2,9 @@ package com.shoppingmall.service;
 
 import com.shoppingmall.domain.ProductCat;
 import com.shoppingmall.exception.CatCdException;
-import com.shoppingmall.repository.CategoryRepository;
+import com.shoppingmall.exception.NotExistCategoryException;
 import com.shoppingmall.dto.CategoryRequestDto;
+import com.shoppingmall.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -47,6 +48,24 @@ public class CategoryService {
         setCategoryCaching();
 
         return "2차 카테고리가 등록 되었습니다.";
+    }
+
+    /**
+     * 카테고리 수정 시, 캐시 업데이트
+     */
+    public String updateCategory(Long id, CategoryRequestDto categoryDto) {
+        ProductCat category = categoryRepository.findById(id).orElseThrow(()
+                -> new NotExistCategoryException("존재하지 않는 카테고리 입니다."));
+
+        category.setCatNm(categoryDto.getCatNm());
+        category.setUseYn(categoryDto.getUseYn());
+
+        categoryRepository.save(category);
+
+        // 캐시 업데이트
+        setCategoryCaching();
+
+        return "카테고리가 수정되었습니다.";
     }
 
     private void saveFirstCategory(CategoryRequestDto.firstCategory firstCategory) {
